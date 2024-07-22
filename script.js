@@ -65,26 +65,27 @@ function drawGraph(xs, ys, preds) {
     const yMax = Math.max(...ys.flat(), ...preds.flat());
     const yMin = Math.min(...ys.flat(), ...preds.flat());
     const yScale = (height - 2 * padding) / (yMax - yMin);
-
     ctx.beginPath();
     ctx.moveTo(padding, height - padding);
     ctx.lineTo(width - padding, height - padding);
     ctx.lineTo(width - padding, padding);
     ctx.stroke();
 
-    ctx.strokeStyle = 'red';
-    ctx.beginPath();
-    ctx.moveTo(padding, height - padding - (ys[0][0] - yMin) * yScale);
-    for (let i = 1; i < ys.length; i++) {
-        ctx.lineTo(padding + i * xScale, height - padding - (ys[i][0] - yMin) * yScale);
+    // Draw actual values
+    ctx.fillStyle = 'red';
+    for (let i = 0; i < ys.length; i++) {
+        const x = padding + i * xScale;
+        const y = height - padding - (ys[i][0] - yMin) * yScale;
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, 2 * Math.PI);
+        ctx.fill();
     }
-    ctx.stroke();
-
-    ctx.strokeStyle = 'blue';
-    ctx.beginPath();
-    ctx.moveTo(padding, height - padding - (preds[0][0] - yMin) * yScale);
-    for (let i = 1; i < preds.length; i++) {
-        ctx.lineTo(padding + i * xScale, height - padding - (preds[i][0] - yMin) * yScale);
+    ctx.fillStyle = 'blue';
+    for (let i = 0; i < preds.length; i++) {
+        const x = padding + i * xScale;
+        const y = height - padding - (preds[i][0] - yMin) * yScale;
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, 2 * Math.PI);
+        ctx.fill();
     }
-    ctx.stroke();
 }
