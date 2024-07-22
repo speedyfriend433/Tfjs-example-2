@@ -23,7 +23,6 @@
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -32,11 +31,11 @@
 
 <div class="form-container">
     <input type="file" id="fileInput" />
-    <button onclick="loadFile()">Load and Visualize</button>
+    <button onclick="loadFile()">Load and Predict</button>
     <p id="predictionResult"></p>
 </div>
 
-<canvas id="myChart" width="400" height="400"></canvas>
+<canvas id="myCanvas" width="800" height="400"></canvas>
 
 <script src="script.js"></script>
 
