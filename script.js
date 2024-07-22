@@ -1,28 +1,44 @@
 import * as tf from '@tensorflow/tfjs';
 let chart;
 
-async function trainAndPredict() {
-    const rawData = document.getElementById('inputData').value;
-    const data = rawData.trim().split('\n').map(row => row.split(',').map(Number));
-    const xs = data.map(row => row.slice(0, -1));
-    const ys = data.map(row => row.slice(-1));
-    const inputTensor = tf.tensor2d(xs);
-    const outputTensor = tf.tensor2d(ys);
-    const model = tf.sequential();
-    
-    model.add(tf.layers.dense({units: 10, activation: 'relu', inputShape: [xs[0].length]}));
-    model.add(tf.layers.dense({units: 1}));
-    model.compile({
-        optimizer: 'adam',
-        loss: 'meanSquaredError'
-    });
+async function loadFile() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
 
-    await model.fit(inputTensor, outputTensor, {epochs: 200});
+    if (!file) {
+        alert('Please select a file.');
+        return;
+    }
 
-    const predictions = model.predict(inputTensor);
-    const preds = await predictions.array();
+    const reader = new FileReader();
+    reader.onload = async function(event) {
+        const rawData = event.target.result;
+        const data = rawData.trim().split('\n').map(row => row.split(',').map(Number));
 
-    updateChart(xs, ys, preds);
+        const xs = data.map(row => row.slice(0, -1));
+        const ys = data.map(row => row.slice(-1));
+
+        const inputTensor = tf.tensor2d(xs);
+        const outputTensor = tf.tensor2d(ys);
+
+        const model = tf.sequential();
+        model.add(tf.layers.dense({units: 10, activation: 'relu', inputShape: [xs[0].length]}));
+        model.add(tf.layers.dense({units: 1}));
+
+        model.compile({
+            optimizer: 'adam',
+            loss: 'meanSquaredError'
+        });
+
+        await model.fit(inputTensor, outputTensor, {epochs: 200});
+
+        const predictions = model.predict(inputTensor);
+        const preds = await predictions.array();
+
+        updateChart(xs, ys, preds);
+    };
+
+    reader.readAsText(file);
 }
 
 function updateChart(xs, ys, preds) {
