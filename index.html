@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TensorFlow.js Neural Network Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        .form-container input {
+            padding: 10px;
+            margin-right: 10px;
+        }
+        .form-container button {
+            padding: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>TensorFlow.js Neural Network Example</h1>
+<p>simple neural network model using TensorFlow.js.</p>
+
+<div class="form-container">
+    <input type="number" id="inputValue" placeholder="Enter a value">
+    <button onclick="makePrediction()">Predict</button>
+    <p id="predictionResult"></p>
+</div>
+
+<canvas id="myChart" width="400" height="400"></canvas>
+
+<script src="script.js"></script>
+
+</body>
+</html>
