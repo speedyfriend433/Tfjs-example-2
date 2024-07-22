@@ -1,4 +1,6 @@
 import * as tf from '@tensorflow/tfjs';
+let chart;
+
 const xs = tf.tensor2d([1, 2, 3, 4], [4, 1]);
 const ys = tf.tensor2d([1, 3, 5, 7], [4, 1]);
 const model = tf.sequential();
@@ -27,7 +29,12 @@ async function drawChart() {
     const preds = await predictions.array();
 
     const ctx = document.getElementById('myChart').getContext('2d');
-    new Chart(ctx, {
+    
+    if (chart) {
+        chart.destroy();
+    }
+
+    chart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: [1, 2, 3, 4, 5, 6],
